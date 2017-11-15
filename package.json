@@ -5,7 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "tdd": "mocha --watch"
+    "tdd": "mocha --watch",
+    "lint": "eslint ./**/*.js"
+  },
+  "engines": {
+    "node": "~6.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haensl/gulp-minify-inline-json.git"
+  },
+  "bugs": {
+    "url": "https://github.com/haensl/gulp-minify-inline-json/issues"
+  },
+  "homepage": {
+    "url": "https://github.com/haensl/gulp-minify-inline-json#readme"
   },
   "keywords": [
     "gulpplugin",
@@ -16,7 +30,11 @@
     "gulp",
     "plugin"
   ],
-  "author": "HP Dietz <h.p.dietz@gmail.com>",
+  "author": {
+    "name": "HP Dietz",
+    "email": "h.p.dietz@gmail.com",
+    "twitter": "@h_p_d"
+  },
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",

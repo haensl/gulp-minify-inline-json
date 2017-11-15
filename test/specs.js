@@ -1,4 +1,5 @@
-const path = require('path');
+const fs = require('fs');
+const join = require('path').join;
 const expect = require('chai').expect;
 const gulp = require('gulp');
 const through = require('through2');
@@ -6,7 +7,7 @@ const through = require('through2');
 
 const minifier = require('../');
 
-const fixtures = (glob) => path.join(__dirname, 'fixtures', glob);
+const fixtures = (glob) => join(__dirname, 'fixtures', glob);
 
 describe('gulp-minify-inline-json', () => {
   describe('application/json', () => {
@@ -19,7 +20,7 @@ describe('gulp-minify-inline-json', () => {
     beforeEach((done) => {
       gulp.src(fixtures('json.html'))
         .pipe(minifier())
-        .pipe(through.obj((file, encoding, callback) => {
+        .pipe(through.obj((file) => {
           output = file.contents.toString();
           done();
         }));
@@ -41,7 +42,7 @@ describe('gulp-minify-inline-json', () => {
     beforeEach((done) => {
       gulp.src(fixtures('jsonld.html'))
         .pipe(minifier())
-        .pipe(through.obj((file, encoding, callback) => {
+        .pipe(through.obj((file) => {
           output = file.contents.toString();
           done();
         }));
@@ -50,6 +51,39 @@ describe('gulp-minify-inline-json', () => {
     it('removes whitespace from json data', () => {
       expected.forEach((expectedScriptTagContent) =>
         expect(new RegExp(expectedScriptTagContent).test(output)).to.be.true);
+    });
+  });
+
+  describe('non-JSON script', () => {
+    it('throws an exception', () => {
+      expect(gulp.src(fixtures('gibberish.html'))
+        .pipe(minifier())
+).to.throw;
+    });
+  });
+
+  describe('no script tag', () => {
+    let output;
+    let input;
+
+    beforeEach((done) => {
+      input = fs.readFileSync(fixtures('noscript.html'), 'utf8');
+      gulp.src(fixtures('noscript.html'))
+        .pipe(minifier())
+        .pipe(through.obj((file) => {
+          output = file.contents.toString();
+          done();
+        }));
+    });
+
+    it('Bypasses the input', () => {
+      expect(output).to.equal(input);
+    });
+  });
+
+  describe('no input', () => {
+    it('does not throw', () => {
+      expect(minifier()).not.to.throw;
     });
   });
 });
