@@ -24,6 +24,60 @@ gulp.task('minifyInlineJSON', () =>
     .pipe(gulp.dest('dist/')));
 ```
 
+## Options
+
+### mimeTypes `Array<string>`
+
+Provide custom mime types to specify which `<script>` tags to minify.
+
+##### default: `[ 'application/json', 'application/ld+json' ]`
+
+##### Example: Minify only tags with `type="application/ld+json"`
+
+###### HTML Layout
+```html
+<html>
+  <head><!-- ... --></head>
+  <body>
+    <!-- ... -->
+    <script type="application/json">{
+      "some": "json"
+    }</script>
+    <script type="application/ld+json">{
+      "foo": "bar"
+    }</script>
+  </body>
+</html>
+```
+
+###### Gulp task
+```javascript
+  const minifyJSON = require('gulp-minify-inline-json');
+
+  gulp.task('minifyJSON', () =>
+    gulp.src('*.html')
+      .pipe(minifyJSON({
+        mimeTypes: [
+          'application/ld+json'
+        ]
+      }))
+      .pipe(gulp.dest('dist/')));
+```
+
+###### Output
+```html
+<html>
+  <head><!-- ... --></head>
+  <body>
+    <!-- ... -->
+    <script type="application/json">{
+      "some": "json"
+    }</script>
+    <script type="application/ld+json">{"foo":"bar"}</script>
+  </body>
+</html>
+```
+
 ## [Changelog](CHANGELOG.md)
 
 ## [License](LICENSE)
