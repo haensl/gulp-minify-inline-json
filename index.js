@@ -3,12 +3,14 @@ const cheerio = require('cheerio');
 const gutil = require('gulp-util');
 
 const PLUGIN_NAME = require('./package').name;
-const mimeTypes = [
-  'application/json',
-  'application/ld+json'
-];
+const DEFAULTS = {
+  mimeTypes: [
+    'application/json',
+    'application/ld+json'
+  ]
+};
 
-module.exports = () =>
+module.exports = (options = {}) =>
   through.obj((file, encoding, callback) => {
     if (file.isNull()) {
       return callback(null, file);
@@ -20,6 +22,10 @@ module.exports = () =>
 
     const $ = cheerio.load(file.contents.toString());
     let didMinify = false;
+
+    const mimeTypes = Array.isArray(options.mimeTypes)
+      ? options.mimeTypes
+      : DEFAULTS.mimeTypes;
 
     $(mimeTypes.map((type) => `script[type="${type}"]`).join(','))
       .each(function() {

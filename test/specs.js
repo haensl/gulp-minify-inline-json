@@ -86,4 +86,54 @@ describe('gulp-minify-inline-json', () => {
       expect(minifier()).not.to.throw;
     });
   });
+
+  describe('options', () => {
+    let output;
+
+    describe('mimeTypes', () => {
+      describe('application/json', () => {
+        beforeEach((done) => {
+          gulp.src(fixtures('json+jsonld.html'))
+            .pipe(minifier({
+              mimeTypes: [
+                'application/json'
+              ]
+            })).pipe(through.obj((file) => {
+              output = file.contents.toString();
+              done();
+            }));
+        });
+
+        it('minifies application/json', () => {
+          expect(/{"type":"json","parent":"head"}/.test(output)).to.be.true;
+        });
+
+        it('does not minify application/ld+json', () => {
+          expect(/{"type":"jsonld","parent":"body"}/.test(output)).to.be.false;
+        });
+      });
+
+      describe('application/ld+json', () => {
+        beforeEach((done) => {
+          gulp.src(fixtures('json+jsonld.html'))
+            .pipe(minifier({
+              mimeTypes: [
+                'application/ld+json'
+              ]
+            })).pipe(through.obj((file) => {
+              output = file.contents.toString();
+              done();
+            }));
+        });
+
+        it('minifies application/json', () => {
+          expect(/{"type":"json","parent":"head"}/.test(output)).to.be.false;
+        });
+
+        it('does not minify application/ld+json', () => {
+          expect(/{"type":"jsonld","parent":"body"}/.test(output)).to.be.true;
+        });
+      });
+    });
+  });
 });
