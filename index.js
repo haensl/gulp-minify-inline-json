@@ -1,6 +1,6 @@
 const through = require('through2');
-const cheerio = require('cheerio');
 const gutil = require('gulp-util');
+const minifyInlineJson = require('minify-inline-json');
 
 const PLUGIN_NAME = require('./package').name;
 const DEFAULTS = {
@@ -10,7 +10,7 @@ const DEFAULTS = {
   ]
 };
 
-module.exports = (options = {}) =>
+module.exports = (opts = {}) =>
   through.obj((file, encoding, callback) => {
     if (file.isNull()) {
       return callback(null, file);
@@ -20,31 +20,17 @@ module.exports = (options = {}) =>
       return callback(new gutil.PluginError(PLUGIN_NAME, 'Streams are not supported.'));
     }
 
-    const $ = cheerio.load(file.contents.toString());
-    let didMinify = false;
-
-    const mimeTypes = Array.isArray(options.mimeTypes)
-      ? options.mimeTypes
-      : DEFAULTS.mimeTypes;
-
-    $(mimeTypes.map((type) => `script[type="${type}"]`).join(','))
-      .each(function() {
-        const script = $(this);
-        const scriptText = script.contents().text().trim();
-
-        if (scriptText.length) {
-          try {
-            script.text(JSON.stringify(JSON.parse(scriptText)));
-            didMinify = true;
-          } catch (e) {
-            return callback(new gutil.PluginError(PLUGIN_NAME, e));
-          }
-        }
-      });
-
-    if (didMinify) {
-      file.contents = new Buffer($.html());
+    if (typeof opts.mimeTypes === 'string') {
+      opts.mimeTypes = [ opts.mimeTypes];
     }
+
+    const options = Object.assign({}, DEFAULTS, opts);
+
+    if (!Array.isArray(options.mimeTypes)) {
+      return callback(new gutil.PluginError(PLUGIN_NAME, 'Invalid option: mimeTypes must be string or Array of strings'));
+    }
+
+    file.contents = new Buffer(minifyInlineJson(file.contents.toString(), options));
 
     callback(null, file);
   });
