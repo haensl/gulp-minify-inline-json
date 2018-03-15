@@ -83,7 +83,7 @@ describe('gulp-minify-inline-json', () => {
 
   describe('no input', () => {
     it('does not throw', () => {
-      expect(minifier()).not.to.throw;
+      expect(minifier).not.to.throw;
     });
   });
 
