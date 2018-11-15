@@ -15,7 +15,7 @@ describe('gulp-minify-inline-json', () => {
     let output;
 
     beforeEach((done) => {
-      return gulp.src('json.html', { cwd: fixturesDir })
+      gulp.src('json.html', { cwd: fixturesDir })
         .pipe(minifier())
         .pipe(through.obj((file) => {
           output = file.contents.toString();
