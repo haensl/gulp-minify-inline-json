@@ -4,7 +4,6 @@ const expect = require('chai').expect;
 const gulp = require('gulp');
 const through = require('through2');
 const fixturesDir = join(__dirname, 'fixtures');
-console.log(fixturesDir);
 const minifier = require('../');
 
 describe('gulp-minify-inline-json', () => {
