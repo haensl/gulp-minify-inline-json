@@ -30,7 +30,7 @@ module.exports = (opts = {}) =>
       return callback(new PluginError(PLUGIN_NAME, 'Invalid option: mimeTypes must be string or Array of strings'));
     }
 
-    file.contents = new Buffer(minifyInlineJson(file.contents.toString(), options));
+    file.contents = Buffer.from(minifyInlineJson(file.contents.toString(), options));
 
     callback(null, file);
   });
