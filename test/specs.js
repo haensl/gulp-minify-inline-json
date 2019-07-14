@@ -3,11 +3,8 @@ const join = require('path').join;
 const expect = require('chai').expect;
 const gulp = require('gulp');
 const through = require('through2');
-//const File = require('vinyl');
-
+const fixturesDir = join(__dirname, 'fixtures');
 const minifier = require('../');
-
-const fixtures = (glob) => join(__dirname, 'fixtures', glob);
 
 describe('gulp-minify-inline-json', () => {
   describe('application/json', () => {
@@ -18,7 +15,7 @@ describe('gulp-minify-inline-json', () => {
     let output;
 
     beforeEach((done) => {
-      gulp.src(fixtures('json.html'))
+      gulp.src('json.html', { cwd: fixturesDir })
         .pipe(minifier())
         .pipe(through.obj((file) => {
           output = file.contents.toString();
@@ -40,7 +37,7 @@ describe('gulp-minify-inline-json', () => {
     let output;
 
     beforeEach((done) => {
-      gulp.src(fixtures('jsonld.html'))
+      gulp.src('jsonld.html', { cwd: fixturesDir })
         .pipe(minifier())
         .pipe(through.obj((file) => {
           output = file.contents.toString();
@@ -56,8 +53,9 @@ describe('gulp-minify-inline-json', () => {
 
   describe('non-JSON script', () => {
     it('throws an exception', () => {
-      expect(gulp.src(fixtures('gibberish.html'))
-        .pipe(minifier())
+      expect(
+        () => gulp.src('gibberish.html', { cwd: fixturesDir })
+          .pipe(minifier())
       ).to.throw;
     });
   });
@@ -67,8 +65,8 @@ describe('gulp-minify-inline-json', () => {
     let input;
 
     beforeEach((done) => {
-      input = fs.readFileSync(fixtures('noscript.html'), 'utf8');
-      gulp.src(fixtures('noscript.html'))
+      input = fs.readFileSync(join(fixturesDir, 'noscript.html'), 'utf8');
+      gulp.src('noscript.html', { cwd: fixturesDir })
         .pipe(minifier())
         .pipe(through.obj((file) => {
           output = file.contents.toString();
@@ -93,7 +91,7 @@ describe('gulp-minify-inline-json', () => {
     describe('mimeTypes', () => {
       describe('application/json', () => {
         beforeEach((done) => {
-          gulp.src(fixtures('json+jsonld.html'))
+          gulp.src('json+jsonld.html', { cwd: fixturesDir })
             .pipe(minifier({
               mimeTypes: [
                 'application/json'
@@ -115,7 +113,7 @@ describe('gulp-minify-inline-json', () => {
 
       describe('application/ld+json', () => {
         beforeEach((done) => {
-          gulp.src(fixtures('json+jsonld.html'))
+          gulp.src('json+jsonld.html', { cwd: fixturesDir })
             .pipe(minifier({
               mimeTypes: [
                 'application/ld+json'
