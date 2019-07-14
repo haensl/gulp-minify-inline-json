@@ -1,3 +1,8 @@
+## 1.3.1
+* [#11: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/11)
+* Replace `gulp-util` with `plugin-error`.
+* Remove deprecated instantiation of Buffers via `new`.
+
 # 1.3.0
 * [#5: Use minify-inline-json instead of cheerio.](https://github.com/haensl/gulp-minify-inline-json/issues/5)
 

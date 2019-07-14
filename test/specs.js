@@ -58,7 +58,7 @@ describe('gulp-minify-inline-json', () => {
     it('throws an exception', () => {
       expect(gulp.src(fixtures('gibberish.html'))
         .pipe(minifier())
-).to.throw;
+      ).to.throw;
     });
   });
 

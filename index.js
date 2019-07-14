@@ -1,5 +1,5 @@
 const through = require('through2');
-const gutil = require('gulp-util');
+const PluginError = require('plugin-error');
 const minifyInlineJson = require('minify-inline-json');
 
 const PLUGIN_NAME = require('./package').name;
@@ -17,7 +17,7 @@ module.exports = (opts = {}) =>
     }
 
     if (file.isStream()) {
-      return callback(new gutil.PluginError(PLUGIN_NAME, 'Streams are not supported.'));
+      return callback(new PluginError(PLUGIN_NAME, 'Streams are not supported.'));
     }
 
     if (typeof opts.mimeTypes === 'string') {
@@ -27,10 +27,10 @@ module.exports = (opts = {}) =>
     const options = Object.assign({}, DEFAULTS, opts);
 
     if (!Array.isArray(options.mimeTypes)) {
-      return callback(new gutil.PluginError(PLUGIN_NAME, 'Invalid option: mimeTypes must be string or Array of strings'));
+      return callback(new PluginError(PLUGIN_NAME, 'Invalid option: mimeTypes must be string or Array of strings'));
     }
 
-    file.contents = new Buffer(minifyInlineJson(file.contents.toString(), options));
+    file.contents = Buffer.from(minifyInlineJson(file.contents.toString(), options));
 
     callback(null, file);
   });
