@@ -1,3 +1,6 @@
+## 1.3.4
+* [#14: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/14)
+
 ## 1.3.3
 * [#11: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/11)
 * Replace `gulp-util` with `plugin-error`.
