@@ -1,3 +1,8 @@
+## 1.3.5
+* [#19: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/19)
+* Internalize eslint configuration into `package.json`.
+* Move main module into `/lib` directory.
+
 ## 1.3.4
 * [#14: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/14)
 
