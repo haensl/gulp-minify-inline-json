@@ -1,3 +1,6 @@
+## 1.4.0
+* [#22: Migrate to CircleCI.](https://github.com/haensl/gulp-minify-inline-json/issues/22)
+
 ## 1.3.5
 * [#19: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/19)
 * Internalize eslint configuration into `package.json`.
