@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 const gulp = require('gulp');
 const through = require('through2');
 const fixturesDir = join(__dirname, 'fixtures');
-const minifier = require('../');
+const minifier = require('../lib');
 
 describe('gulp-minify-inline-json', () => {
   describe('application/json', () => {
@@ -32,7 +32,7 @@ describe('gulp-minify-inline-json', () => {
   describe('application/ld+json', () => {
     const expected = [
       '{"type":"jsonld","parent":"head"}',
-      '{"type":"jsonld","parent":"body"}',
+      '{"type":"jsonld","parent":"body"}'
     ];
     let output;
 
