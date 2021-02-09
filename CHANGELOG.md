@@ -1,3 +1,6 @@
+## 1.4.1
+* [#24: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/24)
+
 ## 1.4.0
 * [#22: Migrate to CircleCI.](https://github.com/haensl/gulp-minify-inline-json/issues/22)
 
