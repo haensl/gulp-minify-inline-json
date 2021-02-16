@@ -1,3 +1,6 @@
+## 1.4.2
+* [#26: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/26)
+
 ## 1.4.1
 * [#24: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/24)
 

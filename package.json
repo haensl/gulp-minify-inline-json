@@ -1,6 +1,6 @@
 {
   "name": "gulp-minify-inline-json",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Gulp plugin to minify inline JSON.",
   "main": "lib/index.js",
   "scripts": {
