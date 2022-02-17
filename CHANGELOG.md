@@ -1,3 +1,7 @@
+## 1.4.7
+* [#36: Add funding information.](https://github.com/haensl/gulp-minify-inline-json/issues/36)
+* Update dependencies.
+
 ## 1.4.6
 * [#34: Update dependencies.](https://github.com/haensl/gulp-minify-inline-json/issues/34)
 
