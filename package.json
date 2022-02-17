@@ -1,6 +1,6 @@
 {
   "name": "gulp-minify-inline-json",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "description": "Gulp plugin to minify inline JSON.",
   "main": "lib/index.js",
   "scripts": {
@@ -52,6 +52,7 @@
     "twitter": "@h_p_d",
     "url": "https://hpdietz.com"
   },
+  "funding": "https://github.com/sponsors/haensl",
   "license": "MIT",
   "dependencies": {
     "minify-inline-json": "^1.1.2",
