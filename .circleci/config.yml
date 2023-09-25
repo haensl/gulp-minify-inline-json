@@ -46,7 +46,8 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          keys: gulp-minify-inline-json-dependencies-{{ checksum "package-lock.json" }}
+          keys:
+            - gulp-minify-inline-json-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: install dependencies
           command: npm i
@@ -69,19 +70,6 @@ commands:
           command: |
             mkdir /tmp/<< parameters.project_name >>
             cd /tmp/<< parameters.project_name >> && npm init -y && echo "Created package.json" && cat package.json
-
-  package-information:
-    steps:
-      - run:
-          name: install tree
-          command: sudo apt-get -y install tree
-      - run:
-          name: gather bundle information
-          command: |
-            npm info gulp-minify-inline-json@${VERSION} > ./bundle.info
-            tree -s node_modules/gulp-minify-inline-json >> ./bundle.info
-      - store_artifacts:
-          path: bundle.info
 
 workflows:
   version: 2
@@ -117,7 +105,7 @@ workflows:
 jobs:
   lint:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     working_directory: ~/gulp-minify-inline-json
     steps:
       - init
@@ -133,7 +121,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     working_directory: ~/gulp-minify-inline-json
     steps:
       - init
@@ -146,7 +134,7 @@ jobs:
 
   bundle:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     working_directory: ~/gulp-minify-inline-json
     steps:
       - init
@@ -175,7 +163,7 @@ jobs:
 
   bundle-test:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     steps:
       - init
       - attach_workspace:
@@ -195,7 +183,7 @@ jobs:
 
   ensure-versioned-correctly:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     working_directory: ~/gulp-minify-inline-json
     steps:
       - init
@@ -226,7 +214,7 @@ jobs:
 
   publish:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     working_directory: ~/gulp-minify-inline-json
     steps:
       - init
@@ -241,7 +229,7 @@ jobs:
 
   package-test:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:lts
     steps:
       - init
       - create-test-project
@@ -255,7 +243,6 @@ jobs:
           working_directory: /tmp/test-app
           command: |
             node -e "const gulpMinifyInlineJson = require('gulp-minify-inline-json'); const assert = require('assert').strict; assert.deepEqual(typeof gulpMinifyInlineJson, 'function');"
-      - package-information
 
   publish-github-release:
     docker:
